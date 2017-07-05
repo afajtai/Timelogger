@@ -71,7 +71,7 @@ public class WorkMonth {
         if (isSameMonth(workDayToAdd) && isNewDate(workDayToAdd)) {
             if (isWeekendEnabled) {
                 days.add(workDayToAdd);
-            } else if (workDayToAdd.isWeekDay() && isWeekendEnabled == false) {
+            } else if (Util.isWeekDay(workDayToAdd.actualDay) && isWeekendEnabled == false) {
                 days.add(workDayToAdd);
             }
         }
@@ -80,7 +80,7 @@ public class WorkMonth {
 
     void addWorkDay(WorkDay workDayToAdd) {
         if (isSameMonth(workDayToAdd) && isNewDate(workDayToAdd)) {
-            if (workDayToAdd.isWeekDay()) {
+            if (Util.isWeekDay(workDayToAdd.actualDay)) {
                 days.add(workDayToAdd);
             }
         }

@@ -13,6 +13,34 @@ import java.time.LocalTime;
  */
 public class Task {
 
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setStartTime(int hour, int min) {
+        this.startTime = LocalTime.of(hour, min);
+    }
+
+    public void setStartTime(String timeInString) {
+        int hour = Integer.parseInt(timeInString.substring(0, 2));
+        int minute = Integer.parseInt(timeInString.substring(3));
+        this.startTime = LocalTime.of(hour, minute);
+    }
+
+    public void setEndTime(int hour, int min) {
+        this.endTime = LocalTime.of(hour, min);
+    }
+
+    public void setEndTime(String timeInString) {
+        int hour = Integer.parseInt(timeInString.substring(0, 2));
+        int minute = Integer.parseInt(timeInString.substring(3));
+        this.endTime = LocalTime.of(hour, minute);
+    }
+
     public String getTaskId() {
         return taskId;
     }
@@ -55,13 +83,17 @@ public class Task {
         this.endTime = LocalTime.of(hour, minute);
     }
 
+    public Task(String taskId) {
+        this.taskId = taskId;
+    }
+
     long getMinPerTask() {
         long endTimeMinutes = endTime.getMinute() + endTime.getHour() * 60;
         long startTimeMinutes = startTime.getMinute() + startTime.getHour() * 60;
         return endTimeMinutes - startTimeMinutes;
     }
 
-    boolean isValidTaskId() {
+    boolean isValidRedmineTaskId() {
         int digitCounter = 0;
         for (char c : taskId.toCharArray()) {
             if (c >= '0' && c <= '9') {
@@ -74,13 +106,27 @@ public class Task {
         }
         return isValid;
     }
-    
-    boolean isMultipleQuarterHour(){
-        long time = this.getMinPerTask();
-        boolean isMultiple= false;
-        if (time % 15 == 0) {
-            isMultiple=true;
+
+    boolean isValidLTTaskId() {
+        int digitCounter = 0;
+        for (char c : taskId.toCharArray()) {
+            if (c >= '0' && c <= '9') {
+                ++digitCounter;
+            }
         }
-        return isMultiple;
+        boolean isValid = false;
+        if ((digitCounter == 7) && (taskId.startsWith("LT-")) && (taskId.length() == 7)) {
+            isValid = true;
+        }
+        return isValid;
     }
+
+    boolean isValidTaskId() {
+        boolean isItValidTaskId = false;
+        if (isValidRedmineTaskId() || isValidLTTaskId()) {
+            isItValidTaskId = true;
+        }
+        return isItValidTaskId;
+    }
+
 }
