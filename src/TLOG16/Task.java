@@ -94,14 +94,8 @@ public class Task {
     }
 
     boolean isValidRedmineTaskId() {
-        int digitCounter = 0;
-        for (char c : taskId.toCharArray()) {
-            if (c >= '0' && c <= '9') {
-                ++digitCounter;
-            }
-        }
         boolean isValid = false;
-        if (((digitCounter == 4) && (taskId.length() == 4)) || ((digitCounter == 7) && (taskId.startsWith("LT-")) && (taskId.length() == 7))) {
+        if (((Util.digitCounter(taskId) == 4) && (taskId.length() == 4)) || ((Util.digitCounter(taskId) == 7) && (taskId.startsWith("LT-")) && (taskId.length() == 7))) {
             isValid = true;
         }
         return isValid;

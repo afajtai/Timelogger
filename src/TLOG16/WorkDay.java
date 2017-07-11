@@ -5,10 +5,11 @@
  */
 package TLOG16;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
+import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.List;
+import static javafx.util.Duration.hours;
+import static javafx.util.Duration.minutes;
 
 /**
  *
@@ -70,17 +71,22 @@ public class WorkDay {
     }
 
     public long getSumPerDay() {
+        sumPerDay=0;
+        for (int i = 0; i < this.task.size(); i++) {
+            if (this.task.get(i).startTime.isBefore(this.task.get(i).endTime)) {
+               long taskMinutes = MINUTES.between(task.get(i).startTime, task.get(i).endTime);
+                this.sumPerDay+=taskMinutes;
+            }
+        }
         return sumPerDay;
     }
 
     long getExtraMinPerDay() {
-        return requiredMinPerDay - sumPerDay;
+        return  this.getSumPerDay()-requiredMinPerDay ;
     }
 
-   
-
     void addTask(Task taskToAdd) {
-        if (Util.isSeparatedTime(taskToAdd,task) && Util.isMultipleQuarterHour(taskToAdd.getMinPerTask())) {
+        if (Util.isSeparatedTime(taskToAdd, task) && Util.isMultipleQuarterHour(taskToAdd.getMinPerTask())) {
             task.add(taskToAdd);
         } else {
             //else part will be implemented later
@@ -88,5 +94,4 @@ public class WorkDay {
 
     }
 
-   
 }

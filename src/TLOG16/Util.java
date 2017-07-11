@@ -15,7 +15,7 @@ import java.util.List;
  * @author andri
  */
 public class Util {
-    
+
     public static boolean isMultipleQuarterHour(long time) {
         boolean isMultiple = false;
         if (time % 15 == 0) {
@@ -23,14 +23,14 @@ public class Util {
         }
         return isMultiple;
     }
-    
-    public static long roundToMultipleQuarterHour(LocalTime startTime, LocalTime endTime){
+
+    public static long roundToMultipleQuarterHour(LocalTime startTime, LocalTime endTime) {
         long endTimeMinutes = endTime.getMinute() + endTime.getHour() * 60;
         long startTimeMinutes = startTime.getMinute() + startTime.getHour() * 60;
-        
-        return 15*(Math.round((endTimeMinutes - startTimeMinutes)/15));
+
+        return 15 * (Math.round((endTimeMinutes - startTimeMinutes) / 15));
     }
-    
+
     public static boolean isSeparatedTime(Task t, List<Task> task) {
         boolean isNotSeparated = false;
         for (int i = 0; i <= task.size(); i++) {
@@ -42,11 +42,22 @@ public class Util {
         }
         return !isNotSeparated;
     }
-     public static boolean isWeekDay(LocalDate actualDay) {
+
+    public static boolean isWeekDay(LocalDate actualDay) {
         boolean isWeekend = false;
         if ((actualDay.getDayOfWeek() == DayOfWeek.SATURDAY) && (actualDay.getDayOfWeek() == DayOfWeek.SUNDAY)) {
             isWeekend = true;
         }
         return !isWeekend;
+    }
+
+    public static int digitCounter(String string) {
+        int digitCounter = 0;
+        for (char c : string.toCharArray()) {
+            if (c >= '0' && c <= '9') {
+                ++digitCounter;
+            }
+        }
+        return digitCounter;
     }
 }

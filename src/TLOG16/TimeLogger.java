@@ -5,6 +5,7 @@
  */
 package TLOG16;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,22 +13,25 @@ import java.util.List;
  * @author andri
  */
 public class TimeLogger {
-    List <WorkMonth> months;
+
+    public static List<WorkMonth> months = new ArrayList<>();
 
     public List<WorkMonth> getMonths() {
         return months;
     }
-    
-    boolean isNewMonth(WorkMonth monthToBeChecked){
-        boolean isItNewMonth = false;
-        if(!months.contains(monthToBeChecked)){
-            isItNewMonth=true;
+
+    public static boolean isNewMonth(WorkMonth monthToBeChecked) {
+        boolean isItNewMonth = true;
+        for (int i = 0; i < months.size(); i++) {
+            if (months.get(i).date.equals(monthToBeChecked.date)) {
+                isItNewMonth = false;
+            }
         }
         return isItNewMonth;
     }
-    
-    void addMonth(WorkMonth monthToBeAdded){
-        if(isNewMonth(monthToBeAdded)){
+
+    void addMonth(WorkMonth monthToBeAdded) {
+        if (isNewMonth(monthToBeAdded)) {
             months.add(monthToBeAdded);
         }
     }

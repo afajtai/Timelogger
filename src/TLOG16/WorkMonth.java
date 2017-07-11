@@ -27,6 +27,11 @@ public class WorkMonth {
 
     }
 
+    public WorkMonth(int year, int month) {
+        date = YearMonth.of(year, month);
+
+    }
+
     public List<WorkDay> getDays() {
         return days;
     }
@@ -40,6 +45,10 @@ public class WorkMonth {
     }
 
     public long getRequiredMinPerMonth() {
+        sumPerMonth = 0;
+        for (int i = 0; i < days.size(); i++) {
+            requiredMinPerMonth += days.get(i).getRequiredMinPerDay();
+        }
         return requiredMinPerMonth;
     }
 
@@ -53,8 +62,11 @@ public class WorkMonth {
 
     boolean isNewDate(WorkDay maybeNewDate) {
         boolean isNotNewDate = false;
-        if (days.contains(maybeNewDate) == true) {
-            isNotNewDate = true;
+
+        for (int i = 0; i < days.size(); i++) {
+            if (days.get(i).actualDay.equals(maybeNewDate.actualDay)) {
+                isNotNewDate = true;
+            }
         }
         return !isNotNewDate;
     }
